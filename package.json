@@ -1,0 +1,34 @@
+{
+  "name": "men-stack-session-auth",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IDAC1899/men-stack-session-auth.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/IDAC1899/men-stack-session-auth/issues"
+  },
+  "homepage": "https://github.com/IDAC1899/men-stack-session-auth#readme",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "dotenv": "^17.4.2",
+    "ejs": "^6.0.1",
+    "env": "^0.0.2",
+    "express": "^5.2.1",
+    "express-session": "^1.19.0",
+    "method-override": "^3.0.0",
+    "mongoose": "^9.9.2",
+    "morgan": "^1.11.0",
+    "nodemon": "^3.1.14"
+  }
+}
