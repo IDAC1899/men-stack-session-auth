@@ -1,15 +1,18 @@
 /* eslint-disable prefer-destructuring */
-const dotenv = require('dotenv');
-
-dotenv.config();
+require('dotenv').config();
 const express = require('express');
 
 const app = express();
 
-const session = require('express-session');
 const mongoose = require('mongoose');
+
+// Middleware
+const session = require('express-session');
+const MongoStore = require('connect-mongo').MongoStore;
 const methodOverride = require('method-override');
 const morgan = require('morgan');
+const isSignedIn = require('./middleware/isSignedIn');
+const addUserToViews = require('./middleware/addUserToViews');
 
 // CONTROLLERS
 const authCtrl = require('./controllers/authCtrl');
@@ -35,14 +38,15 @@ app.use(
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
+    store: MongoStore.create({ mongoUrl: process.env.MONGODB_URI }),
   })
 );
 
+app.use(addUserToViews);
+
 // PUBLIC ROUTES
 app.get('/', async (req, res) => {
-  const user = req.session.user;
-
-  res.render('index.ejs', { user });
+  res.render('index.ejs');
 });
 
 app.get('/auth/sign-up', authCtrl.signup);
@@ -50,9 +54,15 @@ app.post('/auth/sign-up', authCtrl.register);
 app.get('/auth/sign-in', authCtrl.signin);
 app.post('/auth/sign-in', authCtrl.login);
 
-// PRIVATE ROUTES
+// Customer middleware
+app.use(isSignedIn);
 
+// PRIVATE ROUTES
 app.get('/auth/sign-out', authCtrl.signout);
+
+app.get('/protected', async (req, res) => {
+  res.send(`You are logged in as ${req.session.user.username}`);
+});
 
 app.listen(port, () => {
   console.log(`The express app is ready on port ${port}!`);

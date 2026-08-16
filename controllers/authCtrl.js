@@ -29,9 +29,14 @@ const register = async (req, res) => {
     // if password matches create the new user
     const user = await User.create(req.body);
 
-    console.log(user);
+    req.session.user = {
+      username: user.username,
+      _id: user._id,
+    };
     // redirect to homepage
-    res.redirect('/');
+    req.session.save(() => {
+      res.redirect('/');
+    });
   } catch (err) {
     console.log(err);
     res.send('something went wrong');
@@ -44,7 +49,7 @@ const signin = async (req, res) => {
 
 const login = async (req, res) => {
   const userInDatabase = await User.findOne({ username: req.body.username });
-  console.log(userInDatabase);
+
   // only allow users that exist to login
   if (!userInDatabase) {
     return res.send('Invalid credentials');
@@ -63,12 +68,15 @@ const login = async (req, res) => {
     _id: userInDatabase._id,
   };
 
-  res.redirect('/');
+  req.session.save(() => {
+    res.redirect('/');
+  });
 };
 
 const signout = async (req, res) => {
-  req.session.destroy();
-  res.redirect('/');
+  req.session.destroy(() => {
+    res.redirect('/');
+  });
 };
 
 module.exports = {

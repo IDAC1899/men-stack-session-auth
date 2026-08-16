@@ -7,15 +7,15 @@
   </head>
   <body>
     <h1>Create a new account!</h1>
-    <form action="/auth/sign-up" method="POST">           
+    <form action="/auth/sign-up" method="POST">
       <label for="username">Username:</label>
-      <input type="text" name="username" id="username" />
+      <input type="text" name="username" id="username" required />
 
       <label for="password">Password:</label>
-      <input type="password" name="password" id="password" />
+      <input type="password" name="password" id="password" required />
 
       <label for="confirmPassword">Confirm Password:</label>
-      <input type="password" name="confirmPassword" id="confirmPassword" />
+      <input type="password" name="confirmPassword" id="confirmPassword" required />
 
       <button type="submit">Sign up</button>
     </form>

@@ -21,6 +21,7 @@
   "homepage": "https://github.com/IDAC1899/men-stack-session-auth#readme",
   "dependencies": {
     "bcrypt": "^6.0.0",
+    "connect-mongo": "^6.0.0",
     "dotenv": "^17.4.2",
     "ejs": "^6.0.1",
     "env": "^0.0.2",
